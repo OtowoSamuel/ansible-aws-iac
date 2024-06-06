@@ -3,9 +3,9 @@
   gather_facts: False
   tasks:
     - name: Launch EC2 instance
-      ec2:
+      amazon.aws.ec2:
         key_name: Ansible AWS IaC  
-        instance_type: t2.micro   
+        instance_type: t2.micro    
         image: ami-0406d1fdd021121cd  
         region: us-west-2          
         wait: yes
