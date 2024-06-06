@@ -1,17 +1,18 @@
+---
 - name: Provision EC2 instances
   hosts: localhost
-  gather_facts: False
+  gather_facts: false
   tasks:
     - name: Launch EC2 instance
       amazon.aws.ec2:
-        key_name: Ansible AWS IaC  
-        instance_type: t2.micro    
-        image: ami-0406d1fdd021121cd  
-        region: us-west-2          
+        key_name: Ansible AWS IaC
+        instance_type: t2.micro
+        image: ami-0406d1fdd021121cd
+        region: us-west-2
         wait: yes
         count: 1
-        group: 
-          - my-security-group   
+        group:
+          - my-security-group
         instance_tags:
           Name: my_instance
       register: ec2
