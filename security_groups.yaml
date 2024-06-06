@@ -8,7 +8,7 @@
       ec2_group:
         name: my-security-group
         description: My security group
-        region: eu-north-1
+        region: us-west-2
         rules:
           - proto: tcp
             ports:

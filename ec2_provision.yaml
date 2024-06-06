@@ -10,7 +10,7 @@
         instance_type: t2.micro
         image: ami-0c55b159cbfafe1f0
         wait: yes
-        region: eu-north-1
+        region: us-west-2
         group: my-security-group
         count: 2
       register: ec2
