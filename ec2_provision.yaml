@@ -6,9 +6,9 @@
   tasks:
     - name: Launch EC2 instance
       ec2:
-        key_name: my-key
+        key_name: Ansible AWS IaC
         instance_type: t2.micro
-        image: ami-0c55b159cbfafe1f0
+        image: ami-0406d1fdd021121cd
         wait: yes
         region: us-west-2
         group: my-security-group
