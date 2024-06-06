@@ -8,7 +8,7 @@
       aws_s3:
         bucket: my-bucket-unique-name
         mode: create
-        region: us-west-2
+        region: eu-north-1
     - name: Create RDS instance
       rds:
         command: create
@@ -19,4 +19,4 @@
         instance_type: db.t2.micro
         username: admin
         password: password123
-        region: us-west-2
+        region: eu-north-1
