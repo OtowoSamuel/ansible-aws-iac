@@ -1,22 +1,45 @@
 ---
-- name: Manage S3 and RDS
+- name: Create S3 bucket and RDS instance
   hosts: localhost
-  connection: local
   gather_facts: False
   tasks:
     - name: Create S3 bucket
-      aws_s3:
-        bucket: my-bucket-unique-name
-        mode: create
+      amazon.aws.s3_bucket:
+        name: my-unique-bucket-3
+        state: present
         region: us-west-2
+        # Removed ACL setting as it is not supported
+      register: s3_result
+
+    # Example task to check S3 bucket creation
+    # Note: Adjust the path or method according to your actual environment
+    - name: Wait for S3 bucket to be available
+      wait_for:
+        path: "/tmp/s3_bucket_created"
+        timeout: 300
+      when: s3_result is defined and s3_result.changed
+
     - name: Create RDS instance
-      rds:
-        command: create
-        instance_name: mydb
-        db_name: mydatabase
+      community.aws.rds_instance:
+        db_instance_identifier: my-rds-instance
+        db_name: mydb
         engine: mysql
-        size: 5
-        instance_type: db.t2.micro
-        username: admin
-        password: password123
+        master_username: myuser
+        master_user_password: mypassword
+        db_instance_class: db.t3.micro
+        allocated_storage: 20
+        state: present
         region: us-west-2
+        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+      register: rds_result
+
+    - name: Check RDS instance status
+      community.aws.rds_instance:
+        db_instance_identifier: my-rds-instance
+        region: us-west-2
+      register: rds_status
+      retries: 10
+      delay: 30
+      until: rds_status.instances[0].db_instance_status == 'available'
+      when: rds_result is defined and rds_result.changed

@@ -1,12 +1,19 @@
 ---
 - name: Install software on EC2 instances
-  hosts: all
+  hosts: webservers
   become: yes
   tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
+        cache_valid_time: 3600
+
     - name: Install Apache
       apt:
         name: apache2
+        state: present
+
+    - name: Install nginx
+      apt:
+        name: nginx
         state: present

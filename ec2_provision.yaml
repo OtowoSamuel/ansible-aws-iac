@@ -7,7 +7,7 @@
       amazon.aws.ec2_instance:
         key_name: "Ansible AWS IaC"
         instance_type: "t2.micro"
-        image_id: "ami-0406d1fdd021121cd"  
+        image_id: "ami-0406d1fdd021121cd"
         region: "us-west-2"
         wait: true
         count: 1
@@ -15,4 +15,10 @@
           - "my-security-group"
         tags:
           Name: "my_instance"
+        user_data: |
+          #!/bin/bash
+          mkdir -p /home/ubuntu/.ssh
+          echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCXVomcIUVSmL0UW6AJ3r+DdO1kv//qeEYxN7nFzK3ZiOqzrUk1H0FTUhUvmZuF92BNGTgavBNAA8wWmziN+g8ZkvOTWyzB1jkmKCbUeBJgf8E4qfsOo6S7sQDXeaJqILFjoAi7Qdp67VIZiZmB4Nx39FrnNg9d19B2iJIWADJVvJPITR16bAGFiIm7KdPkn5ADAQGg0WEsuvI0gtkpMFE90tXRrXS3xO0ZEqcAvo0zIUi0irRrZO77a0Y3VfBVtBJ3lUIPhfJfyGzHldPj7vPsM+t2EJg4+LAiMZULshtI7/jum+qjjFPXzoZ8MvPoGiVMtBWalxG6UuEVx6xa8k8S5HJfi3K2Fj3PX+Em8vhxX7Fap9QQ1TbIwFlfKiTRQ7c6WayFoAfyKvxdY1O6zLHFBRKV34o2WcxcBHvVScdMbhBn3rv142ZOkCyIgX5UVTS7qKHmgbfaHB6If5Jatl1tpwCnoj/09ftMUxrZscUEfhEY84bVXVtHmGmvgXBkOgwM0FQALLwEDr9QNLI54uj7qu27MeQCPSXtn/aBvWl2zoYgkYiX/lT/3TbtY0A9yGKW1N0quyNyox9FrqdwfaFc8RHDgDpHf0hvrYQTwWJfrDKjJmR+AyrMjSZLnM2ymv+QVOmEpi79C96txREpmo3E/8suLhW1faPDV2CmvNuuVw== samuelotowo@gmail.com" >> /home/ubuntu/.ssh/authorized_keys
+          chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
+          chmod 600 /home/ubuntu/.ssh/authorized_keys
       register: ec2
