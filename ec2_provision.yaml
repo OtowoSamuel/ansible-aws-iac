@@ -8,7 +8,7 @@
         key_name: "Ansible AWS IaC"
         instance_type: "t2.micro"
         image_id: "ami-0406d1fdd021121cd"
-        region: "us-west-2"
+        region: "us-east-1"
         wait: true
         count: 1
         security_groups:
