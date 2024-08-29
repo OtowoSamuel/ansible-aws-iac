@@ -18,6 +18,10 @@
         region: us-east-1
       register: s3_result
 
+    - name: Debug S3 creation result
+      debug:
+        var: s3_result
+
     - name: Create RDS instance
       community.aws.rds_instance:
         db_instance_identifier: my-rds-instance
@@ -31,6 +35,10 @@
         region: us-east-1
       register: rds_result
 
+    - name: Debug RDS creation result
+      debug:
+        var: rds_result
+
     - name: Check RDS instance status
       community.aws.rds_instance:
         db_instance_identifier: my-rds-instance
@@ -38,8 +46,8 @@
       register: rds_status
       retries: 10
       delay: 30
-      until: rds_status.db_instance.db_instance_status == 'available'
-      # Removing the 'when' condition to ensure the check runs
+      until: rds_status.db_instance_status == 'available'
+      # Adjust the condition based on the actual structure observed
 
     - name: Debug RDS status
       debug:
