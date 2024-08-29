@@ -3,9 +3,17 @@
   hosts: localhost
   gather_facts: False
   tasks:
+    - name: Generate a unique bucket name
+      set_fact:
+        s3_bucket_name: "my-unique-bucket-{{ 99999 | random }}"
+
+    - name: Debug generated bucket name
+      debug:
+        msg: "Using bucket name: {{ s3_bucket_name }}"
+
     - name: Create S3 bucket
       amazon.aws.s3_bucket:
-        name: my-unique-bucket-3  # Ensure this name is globally unique
+        name: "{{ s3_bucket_name }}"
         state: present
         region: us-east-1
       register: s3_result
@@ -21,9 +29,6 @@
         allocated_storage: 20
         state: present
         region: us-east-1
-        # Remove the following lines if your AWS credentials are set up in the environment
-        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
-        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
       register: rds_result
 
     - name: Check RDS instance status
