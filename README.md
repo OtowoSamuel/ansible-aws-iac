@@ -47,7 +47,9 @@ Before running the playbooks, ensure you have the following:
 ## Project Structure
 
 s3_rds.yaml: Ansible playbook for configuring S3 buckets and RDS instances.
+
 roles/: Contains Ansible roles for different configurations.
+
 inventory/: Ansible inventory files for defining target hosts.
 
    
