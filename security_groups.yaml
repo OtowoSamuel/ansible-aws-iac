@@ -5,10 +5,10 @@
   gather_facts: False
   tasks:
     - name: Create security group
-      ec2_group:
+      amazon.aws.ec2_security_group:
         name: my-security-group
         description: My security group
-        region: us-west-2
+        region: us-east-1  
         rules:
           - proto: tcp
             ports:
@@ -18,3 +18,4 @@
             ports:
               - 80
             cidr_ip: 0.0.0.0/0
+        state: present
