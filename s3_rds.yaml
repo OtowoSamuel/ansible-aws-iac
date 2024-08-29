@@ -5,19 +5,10 @@
   tasks:
     - name: Create S3 bucket
       amazon.aws.s3_bucket:
-        name: my-unique-bucket-3
+        name: my-unique-bucket-3  # Ensure this name is globally unique
         state: present
         region: us-east-1
-        # Removed ACL setting as it is not supported
       register: s3_result
-
-    # Example task to check S3 bucket creation
-    # Note: Adjust the path or method according to your actual environment
-    - name: Wait for S3 bucket to be available
-      wait_for:
-        path: "/tmp/s3_bucket_created"
-        timeout: 300
-      when: s3_result is defined and s3_result.changed
 
     - name: Create RDS instance
       community.aws.rds_instance:
@@ -30,6 +21,7 @@
         allocated_storage: 20
         state: present
         region: us-east-1
+        # Remove the following lines if your AWS credentials are set up in the environment
         aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
         aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
       register: rds_result
