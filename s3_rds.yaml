@@ -7,7 +7,7 @@
       amazon.aws.s3_bucket:
         name: my-unique-bucket-3
         state: present
-        region: us-west-2
+        region: us-east-1
         # Removed ACL setting as it is not supported
       register: s3_result
 
@@ -29,7 +29,7 @@
         db_instance_class: db.t3.micro
         allocated_storage: 20
         state: present
-        region: us-west-2
+        region: us-east-1
         aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
         aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
       register: rds_result
@@ -37,7 +37,7 @@
     - name: Check RDS instance status
       community.aws.rds_instance:
         db_instance_identifier: my-rds-instance
-        region: us-west-2
+        region: us-east-1
       register: rds_status
       retries: 10
       delay: 30
