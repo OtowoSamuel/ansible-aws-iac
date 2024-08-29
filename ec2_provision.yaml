@@ -7,7 +7,7 @@
       amazon.aws.ec2_instance:
         key_name: "Ansible AWS IaC"
         instance_type: "t2.micro"
-        image_id: "ami-0ab62d4858e6e2a26"
+        image_id: "ami-02c0a04d09a04e4d7"
         region: "us-east-1"
         wait: true
         count: 1
