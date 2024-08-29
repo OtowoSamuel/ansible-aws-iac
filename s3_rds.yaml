@@ -31,6 +31,10 @@
         region: us-east-1
       register: rds_result
 
+    - name: Debug RDS creation result
+      debug:
+        var: rds_result
+
     - name: Check RDS instance status
       community.aws.rds_instance:
         db_instance_identifier: my-rds-instance
@@ -38,5 +42,10 @@
       register: rds_status
       retries: 10
       delay: 30
-      until: rds_status.instances[0].db_instance_status == 'available'
+      until: >
+        rds_status.db_instance.db_instance_status == 'available'
       when: rds_result is defined and rds_result.changed
+
+    - name: Debug RDS status
+      debug:
+        var: rds_status
